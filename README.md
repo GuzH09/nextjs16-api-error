@@ -1,14 +1,10 @@
-# Next.js 16 + Cache Components Migration Workshop
+# Next.js 16 API Build Errors
 
-Welcome to the Next.js 16 + Cache Components workshop! Learn how to migrate from Next.js 15 to Next.js 16's new caching features with cache components.
+In this repository you will find three test cases for API Routes, one of which produces a build error.
 
-## Prerequisites
+## To reproduce
 
-- Node.js 18+ installed
-- Basic knowledge of Next.js App Router
-- Understanding of React Server Components
-
-## Getting Started
+- Install dependencies
 
 ```bash
 # Install dependencies
@@ -20,68 +16,33 @@ pnpm dev
 # Visit http://localhost:3000
 ```
 
-## Current Implementation (Next.js 15)
+- Create a build
 
-The blog application currently uses:
-- `export const dynamic = 'force-dynamic'` for the blog page
-- `export const dynamic = 'force-static'` for the homepage
-- Mocked data with simulated API delays
-
-Check the console to see API calls being logged.
-
-## Migration Tasks
-
-### Task 1: Enable Next.js 16 Features
-
-Update to Next.js 16 and enable new caching features.
-
-1. Update `package.json`:
-```json
-"next": "^16.0.0"
+```bash
+pnpm build
 ```
 
-2. Configure `next.config.ts`:
-```typescript
-const nextConfig = {
-  cacheComponents: true,
-};
-```
+## Test Case 1 (Using Try Catch)
 
-3. Run `pnpm install`
+- Code:
+<img width="662" height="391" alt="Screenshot" src="https://github.com/user-attachments/assets/4af86f35-457e-476b-8065-c11963668304" />
 
-### Task 2: Home page
+- Build Error:
+<img width="954" height="727" alt="Screenshot" src="https://github.com/user-attachments/assets/3deace98-0b77-4d3f-8230-6fd6d92ba7c0" />
 
-Migrate home page to use [`"use cache"`](https://nextjs.org/docs/app/api-reference/directives/use-cache) directive. Remember to keep the original [revalidation time](https://nextjs.org/docs/app/api-reference/functions/cacheLife) of 60 seconds.
+- GET Request on Localhost (No problems):
+<img width="413" height="161" alt="Screenshot" src="https://github.com/user-attachments/assets/b88492c7-e82f-45ec-aec0-1c4c12159787" />
 
-### Task 3: Blog page
+- Build Error on Vercel deployment:
+<img width="1492" height="685" alt="Screenshot" src="https://github.com/user-attachments/assets/d50183fd-b843-46c9-8548-c674e9e4596f" />
 
-Migrate the blog page to use `"use cache"`. Currently the entire page is dynamic because results are dynamic. Find a way of making the categories and layout static while keeping the posts dynamic.
+- GET Request on Vercel deployment (No problems):
+<img width="605" height="164" alt="Screenshot" src="https://github.com/user-attachments/assets/20902121-711c-4f1f-b9a7-792a8a857b81" />
 
-### Task 4: Blog post page
+## Test Case 2 (Using await connection + Try Catch - No errors)
 
-Create a fully static blog post page that uses [`cacheTag`](https://nextjs.org/docs/app/api-reference/functions/cacheTag) to set a tag with the blog post id.
+<img width="665" height="470" alt="Screenshot2" src="https://github.com/user-attachments/assets/65a80330-968e-4337-9b70-19d3733034b3" />
 
-### Task 5: Revalidate the cache
+## Test Case 3 (Using nothing - No errors)
 
-Create a secured route to revalidate the cache of a given tag using [`revalidateTag`](https://nextjs.org/docs/app/api-reference/functions/revalidateTag).
-
-### Task 6: Add a dynamic featured posts section to blog post page
-
-Add a dynamic section to the end of the blog post page to show the featured posts.
-
-## Bonus Tasks
-
-- Show the active category in the `category-filter` component.
-- Create a custom cache profile in `next.config.ts` and use it.
-- Deploy the application and verify everything works.
-
-## Resources
-
-- [cacheComponents](https://nextjs.org/docs/app/api-reference/config/next-config-js/cacheComponents)
-- ["use cache" Directive](https://nextjs.org/docs/app/api-reference/directives/use-cache)
-- [cacheLife Function](https://nextjs.org/docs/app/api-reference/functions/cacheLife)
-- [cacheTag Function](https://nextjs.org/docs/app/api-reference/functions/cacheTag)
-
----
-
-**Happy coding!** 🚀
+<img width="614" height="254" alt="Screenshot3" src="https://github.com/user-attachments/assets/449a4076-daa2-4f5e-af1f-1dfc9c8c0c70" />
